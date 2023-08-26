@@ -1,0 +1,14 @@
+node_modules
+npm-debug*
+yarn-error*
+.nuxt
+*.DS_Store
+.idea
+.tool-versions
+.dockerignore
+.vscode
+LICENSE
+README.md
+.gitignore
+Dockerfile*
+docker-compose*

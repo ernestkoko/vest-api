@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+     "types": ["jest","node"],
+     "lib": [
+        "es2015"
+     ],
+     "target": "ES6",
+     "module": "commonjs",
+     "outDir": "./dist",
+     "rootDir": "./src",
+     "strict": true,
+     "skipLibCheck": true,
+     "strictNullChecks": false,
+    "allowSyntheticDefaultImports": true,
+     "sourceMap": true,
+     "emitDecoratorMetadata": true,
+     "experimentalDecorators": true,
+     "esModuleInterop": true
+  },
+  "include": [
+     "lib/**/*.ts",
+     "src/**/*.ts"
+  ],
+  "exclude": [
+     "node_modules"
+  ],
+  "typeRoots": [
+     "../node_modules/@types/index.d.ts"
+  ]
+}
