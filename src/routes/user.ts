@@ -31,6 +31,8 @@ router.post('/:id/posts',
     UserController.createPost
 );
 
-router.get('/most-comments', UserController.getTopThreeUsersPostAndLatestComment);
+router.get('/most-comments', 
+auth,
+UserController.getTopThreeUsersPostAndLatestComment);
 
 export default router;

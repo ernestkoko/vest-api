@@ -4,6 +4,7 @@ import { AppDatasoruce } from "./source";
 import { Comment } from "../models/entities/comment.entity";
 import { BadRequestException } from "../../lib/custom-errors";
 import { User } from "../models/entities/user.entity";
+import { AuthUser } from "../standards/auth-user";
 
 export class PostService{
     private readonly postRepository: Repository<Post> =  AppDatasoruce.manager.getRepository(Post);

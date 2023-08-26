@@ -30,8 +30,8 @@ export class UserController {
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      // const data = await this.userService.;
-      // return res.send({data})
+      const data = await this.userService.get();
+      return res.send({data})
     }catch(e){
       console.log({ERROR: e})
       next(e);

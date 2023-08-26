@@ -9,43 +9,47 @@ import { BadRequestException } from "../../lib/custom-errors";
 import { Post } from "../models/entities/post.entity";
 import { Comment } from "../models/entities/comment.entity";
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
+import { AuthUser } from "../standards/auth-user";
 export class UserService  {
     private readonly userRepository: Repository<User> =  AppDatasoruce.manager.getRepository(User);
     private readonly postRepository: Repository<Post> =  AppDatasoruce.manager.getRepository(Post);
 
     
    async login({email, password}:{email:string, password: string}){
-    const user = await this.userRepository.findOne({
-        where:{
-            email: email
-        },
-        select:{
-            id: true,
-            password: true,
-            email: true,
-            username: true
-        }
-    })
+        const user = await this.userRepository.findOne({
+            where:{
+                email: email
+            },
+            select:{
+                id: true,
+                password: true,
+                email: true,
+                username: true
+            }
+        })
 
-    if(!user) throw new BadRequestException("Email is wrong");
+        if(!user) throw new BadRequestException("Email is wrong");
 
-    const passwordCorrect = await bcrypt.compare(password, user.password);
-    if(!passwordCorrect) throw new BadRequestException('Invalid credentials');
-    const payload :{}= {email: user.email, id: user.id }
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "10h"
-    });
-    return {
-        token,
-        user:{
-            id: user.id,
-            name: user.username,
-            email: user.email
+        const passwordCorrect = await bcrypt.compare(password, user.password);
+        if(!passwordCorrect) throw new BadRequestException('Invalid credentials');
+        const payload :{}= {email: user.email, id: user.id }
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: "10h"
+        });
+        return {
+            token,
+            user:{
+                id: user.id,
+                name: user.username,
+                email: user.email
+            }
         }
     }
 
-
-   }
+    async get (): Promise<User[]>{
+        const users = await this.userRepository.find();
+        return users;
+    }
     async getTopThreeUsersPostAndLatestComment(){
         const query = this.userRepository.createQueryBuilder('user')
             .leftJoinAndSelect("user.posts",'post')
@@ -98,7 +102,7 @@ export class UserService  {
     async createPost(userId: number, post: Post, authUser: AuthUser ):Promise<Post>{
         const user = await this.userRepository.findOne({
             where:{
-                id: userId
+                id: authUser.id
             }
         });
         if(!user) throw new BadRequestException('User not found');

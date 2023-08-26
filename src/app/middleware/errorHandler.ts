@@ -8,12 +8,12 @@ import {
   } from '../../config/constants';
   
   import { BadRequestException, NotFoundException, ServerException } from '../../lib/custom-errors';
-  import { Logger } from '../../lib/logger';
+  // import { Logger } from '../../lib/logger';
   import { APIError } from '../global/response/apierror';
   
   const middlewares = {
     handleRequestError(error: any, req: any, res: any, next: any) {
-      const logger: any = new Logger();
+      // const logger: any = new Logger();
       switch (true) {
         case (error instanceof NotFoundException):
           return res.status(NOT_FOUND_STATUS_CODE).json({
@@ -41,7 +41,7 @@ import {
           });
         // send email
       }
-      logger.log('info', 'Request handle error!!', error);
+      // logger.log('info', 'Request handle error!!', error);
       res.end();
     },
   };

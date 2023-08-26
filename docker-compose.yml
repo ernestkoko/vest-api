@@ -1,23 +1,25 @@
 version: "3.8"
 services:
   node:
-      build: .
-      ports:
-        - 3002:3002
-      volumes:
-        - ./:/usr/src/app
-      depends_on:
-        - mysql-server
+    build: .
+    ports:
+      - 3002:3002
+    volumes:
+      - ./:/usr/src/app
+      - usr/src/app/node_modules/
+    depends_on:
+      - mysql-server
   mysql-server:
-      image: mysql:5.7
-      ports:
-        - 3300:3300
-      environment:
-        MYSQL_ROOT_PASSWORD: root
-        DB_NAME: test
-        DB_USER: root
-        DB_PASSWORD: password
-      volumes:
-        - data-db:/var/lib/mysql
+    image: mysql:5.7
+    ports:
+      - 3307:3307
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      DATABASE_NAME: vest
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: password
+    volumes:
+      - data-db:/var/lib/mysql
+
 volumes:
   data-db: {}
