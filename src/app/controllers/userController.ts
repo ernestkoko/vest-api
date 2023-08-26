@@ -10,14 +10,28 @@ import { Post } from '../models/entities/post.entity';
 export class UserController {
   private static readonly userService: UserService = new UserService();
   
+  public static login = async (req: Request, res: Response, next: NextFunction) =>{
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const email: string = req.body.email;
+      const password: string = req.body.password;
+      const data = await this.userService.login({email, password});
+      return res.send(data);
+    }catch(e){
+      next(e)
+    }
+  }
   public static listAll = async (req: Request, res: Response, next: NextFunction) =>  {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const data = await this.userService.get();
-      return res.send({data})
+      // const data = await this.userService.;
+      // return res.send({data})
     }catch(e){
       console.log({ERROR: e})
       next(e);
@@ -40,6 +54,8 @@ export class UserController {
 
   public static createPost = async (req: Request, res: Response, next: NextFunction)=>{
     try {
+      //@ts-ignore
+      
       const id = req.params.id
       if(!id){
         throw new BadRequestException('id must be set');
@@ -55,7 +71,9 @@ export class UserController {
       const userId = parseInt(id, 10);
       
       const post = req.body as Post;
-      const data = await this.userService.createPost(userId, post)
+      //@ts-ignore
+      const authUser: AuthUser = req.token;
+      const data = await this.userService.createPost(userId, post, authUser)
       return res.send(data);
     }catch(e){
       next(e);

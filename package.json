@@ -24,6 +24,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -32,6 +33,7 @@
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
     "express-winston": "^4.2.0",
+    "jsonwebtoken": "^9.0.1",
     "mysql2": "^3.6.0",
     "reflect-metadata": "^0.1.13",
     "strong-params": "^1.0.0",
@@ -55,8 +57,7 @@
   },
   "jest": {
     "rootDir": "src",
-    "setupFiles": [
-    ],
+    "setupFiles": [],
     "moduleFileExtensions": [
       "js",
       "json",

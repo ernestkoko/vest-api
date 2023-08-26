@@ -13,7 +13,7 @@ app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(params.expressMiddleware());
 app.use(logger.getRequestLogger());
 
-app.use('/', apiRoutes);
+app.use('', apiRoutes);
 app.get('/health', (req, res) => res.json({ status: true, message: 'Health OK!' }));
 
 // app.use(logger.getRequestErrorLogger());

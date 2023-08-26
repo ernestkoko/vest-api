@@ -18,7 +18,9 @@ export class PostController {
             }
             const postId = parseInt(id);
             const comment = req.body as Comment
-            const data = await this.postService.addCommentToPost(postId,comment);
+            //@ts-ignore
+            const authUser: AuthUser = req.token;
+            const data = await this.postService.addCommentToPost({postId,comment, authUser});
             return res.send(data);
         }catch(e){
             next(e);
